@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlack">
+    android:background="@color/colorBlack"
+    android:keepScreenOn="true">
 
     <ImageView
         android:id="@+id/imageView"
@@ -22,7 +23,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginBottom="48dp"
-        android:tint="@color/colorWhite"
+        app:tint="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
@@ -43,7 +44,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginBottom="32dp"
-        android:tint="@color/colorWhite"
+        app:tint="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="@+id/imageView4"
         app:layout_constraintStart_toStartOf="@+id/imageView4"
@@ -100,6 +101,19 @@
         app:layout_constraintStart_toStartOf="@+id/textView7"
         app:layout_editor_absoluteX="68dp"
         app:layout_editor_absoluteY="437dp" />
+
+    <ProgressBar
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="0.7dp"
+        android:layout_marginTop="8dp"
+        android:indeterminate="true"
+        android:progressBackgroundTint="@color/colorWhite"
+        android:progressTint="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="@+id/textView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
