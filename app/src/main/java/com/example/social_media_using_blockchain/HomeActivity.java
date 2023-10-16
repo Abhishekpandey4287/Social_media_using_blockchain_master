@@ -6,6 +6,10 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,11 +23,19 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
+import com.example.social_media_using_blockchain.Adapter.DemoAdapter;
+import com.example.social_media_using_blockchain.models.MediaObject;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeActivity extends AppCompatActivity {
     private ImageView sound_dis;
+    private List<MediaObject> mediaObjectList = new ArrayList<>();
+    private DemoAdapter demoAdapter;
+    private RecyclerView recyclerview;
     private ImageView imageView7;
     private static final int PICK_IMAGE = 1;
 
@@ -31,7 +43,10 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        intit();
+        init();
+
+        imageView7 =(ImageView) findViewById(R.id.imageView7); // Initialize the imageView7
+        Glide.with(this).load(R.drawable.add).into(imageView7);
         imageView7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,10 +57,8 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void intit() {
-        imageView7 = findViewById(R.id.imageView7); // Initialize the imageView7
+    private void init() {
 
-        Glide.with(this).load(R.drawable.add).into(imageView7);
         if(Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT <21){
             setWindowFlag(this , WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS , true);
         }
@@ -56,6 +69,31 @@ public class HomeActivity extends AppCompatActivity {
             setWindowFlag(this , WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+        recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerview.setLayoutManager(layoutManager);
+
+        SnapHelper mSnapHelper = new PagerSnapHelper();
+        mSnapHelper.attachToRecyclerView(recyclerview);
+
+        mediaObjectList.add(new MediaObject("","","","","","","","","",""));
+        mediaObjectList.add(new MediaObject("","","","","","","","","",""));
+        mediaObjectList.add(new MediaObject("","","","","","","","","",""));
+        mediaObjectList.add(new MediaObject("","","","","","","","","",""));
+        mediaObjectList.add(new MediaObject("","","","","","","","","",""));
+        mediaObjectList.add(new MediaObject("","","","","","","","","",""));
+        mediaObjectList.add(new MediaObject("","","","","","","","","",""));
+        mediaObjectList.add(new MediaObject("","","","","","","","","",""));
+        mediaObjectList.add(new MediaObject("","","","","","","","","",""));
+        mediaObjectList.add(new MediaObject("","","","","","","","","",""));
+        mediaObjectList.add(new MediaObject("","","","","","","","","",""));
+
+        demoAdapter = new DemoAdapter(mediaObjectList, getApplicationContext());
+        recyclerview.setAdapter(demoAdapter);
+        demoAdapter.notifyDataSetChanged();
+
+
     }
 
     public static void setWindowFlag(@NotNull Activity activity , final int bits , boolean on){
