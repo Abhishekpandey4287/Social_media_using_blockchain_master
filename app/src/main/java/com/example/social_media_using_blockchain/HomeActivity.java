@@ -37,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
     private DemoAdapter demoAdapter;
     private RecyclerView recyclerview;
     private ImageView imageView7;
+      private ImageView imageView9; 
     private static final int PICK_IMAGE = 1;
 
     @Override
@@ -44,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         init();
+        imageView9 = findViewById(R.id.imageView9);
 
         imageView7 =(ImageView) findViewById(R.id.imageView7); // Initialize the imageView7
         Glide.with(this).load(R.drawable.add).into(imageView7);
@@ -51,6 +53,21 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openGallery();
+            }
+        });
+        imageView9 = findViewById(R.id.imageView9);
+        imageView9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinearLayout searchLayout = findViewById(R.id.searchLayout);
+                // Find the search bar layout
+
+                // Toggle visibility of the search layout
+                if (searchLayout.getVisibility() == View.VISIBLE) {
+                    searchLayout.setVisibility(View.GONE);
+                } else {
+                    searchLayout.setVisibility(View.VISIBLE);
+                }
             }
         });
 
