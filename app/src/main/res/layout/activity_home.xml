@@ -58,6 +58,31 @@
         app:layout_constraintTop_toTopOf="@+id/imageView8"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/search" />
+    <LinearLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="167dp"
+        android:layout_height="157dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/imageView9"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search..."
+            app:tint="@color/colorWhite"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/searchResultsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView11"
