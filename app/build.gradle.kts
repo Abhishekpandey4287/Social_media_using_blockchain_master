@@ -37,6 +37,7 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation ("de.hdodenhof:circleimageview:3.1.0") // to create circle images
     implementation("com.google.android.material:material:1.9.0") // material
     implementation("com.github.AtifSayings:Animatoo:1.0.1") // animations
