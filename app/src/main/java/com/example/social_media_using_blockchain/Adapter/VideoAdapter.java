@@ -1,6 +1,7 @@
 package com.example.social_media_using_blockchain.Adapter;
 
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,10 @@ import com.example.social_media_using_blockchain.models.VideoModel;
 import java.util.ArrayList;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder> {
-    private ArrayList<VideoModel> videos;
+    private ArrayList<VideoModel> videoData;
 
-    public VideoAdapter(ArrayList<VideoModel> videos) {
-        this.videos = videos;
+    public VideoAdapter(ArrayList<VideoModel> videoData) {
+        this.videoData = videoData;
     }
 
     @NonNull
@@ -33,39 +34,35 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.setData(videos.get(position));
+        holder.setData(videoData.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return videos.size();
+        return videoData.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         VideoView videoView;
-        ImageView like, share, token, comment, musicGif;
         TextView songName, description, username;
         ProgressBar progressBar;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             videoView = itemView.findViewById(R.id.videoView);
-            like = itemView.findViewById(R.id.like);
-            share = itemView.findViewById(R.id.share);
-            token = itemView.findViewById(R.id.token);
-            comment = itemView.findViewById(R.id.comment);
-            musicGif = itemView.findViewById(R.id.musicGif);
             songName = itemView.findViewById(R.id.songName);
             description = itemView.findViewById(R.id.description);
             username = itemView.findViewById(R.id.userName);
             progressBar = itemView.findViewById(R.id.videoProgressBar);
         }
 
-        void setData(VideoModel obj) {
-            videoView.setVideoPath(obj.getMedia_url());
-            description.setText(obj.getDescription());
-            username.setText(obj.getUserName());
-            songName.setText(obj.getSongName());
+        void setData(VideoModel videoModel) {
+            Uri videoUri = Uri.parse(videoModel.getMedia_url());
+            videoView.setVideoURI(videoUri);
+            description.setText(videoModel.getDescription());
+            username.setText(videoModel.getUserName());
+            songName.setText(videoModel.getSongName());
+
             videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mediaPlayer) {
@@ -73,6 +70,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
                     mediaPlayer.start();
                 }
             });
+
             videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {

@@ -1,8 +1,5 @@
 package com.example.social_media_using_blockchain;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,20 +7,20 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.social_media_using_blockchain.Adapter.VideoAdapter;
 import com.example.social_media_using_blockchain.models.VideoModel;
-
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
-    private ImageView sound_dis;
     private ImageView imageView7;
     private ImageView imageView9;
     private static final int PICK_IMAGE = 1;
-
-    private ViewPager2 viewPager2;
+    private RecyclerView recyclerView;
+    private VideoAdapter videoAdapter;
     private ArrayList<VideoModel> videos;
 
     @Override
@@ -32,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         initViews();
-        setupViewPager();
+        setupRecyclerView();
 
         imageView7.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,21 +46,28 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    private void setupRecyclerView() {
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        videoAdapter = new VideoAdapter(videos);
+        recyclerView.setAdapter(videoAdapter);
+    }
+
     private void initViews() {
         imageView7 = findViewById(R.id.imageView7);
         Glide.with(this).load(R.drawable.add).into(imageView7);
 
         imageView9 = findViewById(R.id.imageView9);
-        viewPager2 = findViewById(R.id.viewpager);
-
         videos = new ArrayList<>();
         VideoModel video = new VideoModel("hello, such a nice day", "abhishek",
                 "https://docjamal.xyz/wp-content/uploads/2020/08/video4.mp4", "ma ta chalya teri or");
         videos.add(video);
-    }
-
-    private void setupViewPager() {
-        viewPager2.setAdapter(new VideoAdapter(videos));
+        VideoModel video1 = new VideoModel("hello, such a nice day", "abhishek",
+                "https://docjamal.xyz/wp-content/uploads/2020/08/video4.mp4", "ma ta chalya teri or");
+        videos.add(video1);
+        VideoModel video2 = new VideoModel("hello, such a nice day", "abhishek",
+                "https://docjamal.xyz/wp-content/uploads/2020/08/video4.mp4", "ma ta chalya teri or");
+        videos.add(video2);
     }
 
     private void openGallery() {
