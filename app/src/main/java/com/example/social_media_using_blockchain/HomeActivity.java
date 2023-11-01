@@ -7,21 +7,26 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.bumptech.glide.Glide;
 import com.example.social_media_using_blockchain.Adapter.VideoAdapter;
 import com.example.social_media_using_blockchain.models.VideoModel;
+
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
+    private static final int PICK_IMAGE = 1;
     private ImageView imageView7;
     private ImageView imageView9;
-    private static final int PICK_IMAGE = 1;
-    private RecyclerView recyclerView;
+    private ViewPager2 viewPager;
     private VideoAdapter videoAdapter;
     private ArrayList<VideoModel> videos;
+    private int currentVideoIndex = 0;
+    private boolean isAutoScrolling = true;
+    private static final long AUTO_SCROLL_DELAY = 5000; // 5 seconds delay
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         initViews();
-        setupRecyclerView();
+        setupViewPager();
 
         imageView7.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,13 +49,26 @@ public class HomeActivity extends AppCompatActivity {
                 toggleSearchLayout();
             }
         });
+
+        // Start auto-scrolling through videos
+        startAutoScroll();
     }
 
-    private void setupRecyclerView() {
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    private void setupViewPager() {
+        viewPager = findViewById(R.id.viewPager2);
         videoAdapter = new VideoAdapter(videos);
-        recyclerView.setAdapter(videoAdapter);
+        viewPager.setAdapter(videoAdapter);
+
+        // Set a listener to detect the end of the list
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                if (position == videos.size() - 1) {
+                    // Reached the end of the list
+                    stopAutoScroll();
+                }
+            }
+        });
     }
 
     private void initViews() {
@@ -59,15 +77,25 @@ public class HomeActivity extends AppCompatActivity {
 
         imageView9 = findViewById(R.id.imageView9);
         videos = new ArrayList<>();
-        VideoModel video = new VideoModel("hello, such a nice day", "abhishek",
-                "https://docjamal.xyz/wp-content/uploads/2020/08/video4.mp4", "ma ta chalya teri or");
+
+        // Example VideoModel:
+        VideoModel video = new VideoModel("Hello, it's a nice day", "Abhishek",
+                "https://docjamal.xyz/wp-content/uploads/2020/08/video4.mp4", "Let's enjoy the day!");
         videos.add(video);
-        VideoModel video1 = new VideoModel("hello, such a nice day", "abhishek",
-                "https://docjamal.xyz/wp-content/uploads/2020/08/video4.mp4", "ma ta chalya teri or");
+        VideoModel video1 = new VideoModel("Greetings from Abhishek", "Abhishek",
+                "https://docjamal.xyz/wp-content/uploads/2020/08/video4.mp4", "Have a great day!");
         videos.add(video1);
-        VideoModel video2 = new VideoModel("hello, such a nice day", "abhishek",
-                "https://docjamal.xyz/wp-content/uploads/2020/08/video4.mp4", "ma ta chalya teri or");
+        VideoModel video2 = new VideoModel("Beautiful Scenery", "Abhishek",
+                "https://docjamal.xyz/wp-content/uploads/2020/08/video4.mp4", "Nature's beauty!");
         videos.add(video2);
+
+        // Add more VideoModel instances as needed
+    }
+
+    private void toggleSearchLayout() {
+        LinearLayout searchLayout = findViewById(R.id.searchLayout);
+        int visibility = searchLayout.getVisibility();
+        searchLayout.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
     }
 
     private void openGallery() {
@@ -75,10 +103,24 @@ public class HomeActivity extends AppCompatActivity {
         startActivityForResult(galleryIntent, PICK_IMAGE);
     }
 
-    private void toggleSearchLayout() {
-        LinearLayout searchLayout = findViewById(R.id.searchLayout);
-        int visibility = searchLayout.getVisibility();
-        searchLayout.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
+    private void startAutoScroll() {
+        final android.os.Handler handler = new android.os.Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isAutoScrolling && currentVideoIndex < videos.size() - 1) {
+                    // Scroll to the next video
+                    currentVideoIndex++;
+                    viewPager.setCurrentItem(currentVideoIndex);
+                }
+                handler.postDelayed(this, AUTO_SCROLL_DELAY);
+            }
+        }, AUTO_SCROLL_DELAY);
+    }
+
+    private void stopAutoScroll() {
+        isAutoScrolling = false;
+        Toast.makeText(this, "Reached the end of the list", Toast.LENGTH_SHORT).show();
     }
 
     @Override

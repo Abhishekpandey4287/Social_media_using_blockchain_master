@@ -9,13 +9,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.VideoView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.social_media_using_blockchain.R;
 import com.example.social_media_using_blockchain.models.VideoModel;
-
 import java.util.ArrayList;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder> {
