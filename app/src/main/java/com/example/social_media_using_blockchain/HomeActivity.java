@@ -80,13 +80,13 @@ public class HomeActivity extends AppCompatActivity {
 
         // Example VideoModel:
         VideoModel video = new VideoModel("Hello, it's a nice day", "Abhishek",
-                "https://docjamal.xyz/wp-content/uploads/2020/08/video4.mp4", "Let's enjoy the day!");
+                "https://video.blender.org/download/videos/3d95fb3d-c866-42c8-9db1-fe82f48ccb95-804.mp4", "Let's enjoy the day!");
         videos.add(video);
         VideoModel video1 = new VideoModel("Greetings from Abhishek", "Abhishek",
-                "https://docjamal.xyz/wp-content/uploads/2020/08/video4.mp4", "Have a great day!");
+                "https://video.blender.org/download/videos/3d95fb3d-c866-42c8-9db1-fe82f48ccb95-804.mp4", "Have a great day!");
         videos.add(video1);
         VideoModel video2 = new VideoModel("Beautiful Scenery", "Abhishek",
-                "https://docjamal.xyz/wp-content/uploads/2020/08/video4.mp4", "Nature's beauty!");
+                "https://video.blender.org/download/videos/3d95fb3d-c866-42c8-9db1-fe82f48ccb95-804.mp4", "Nature's beauty!");
         videos.add(video2);
 
         // Add more VideoModel instances as needed
