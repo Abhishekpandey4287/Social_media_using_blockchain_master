@@ -38,7 +38,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginBottom="14dp"
         app:tint="@color/colorWhite"
-        android:background="@color/colorBlack"
         app:layout_constraintBottom_toBottomOf="@+id/imageView7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView7"
@@ -109,17 +108,6 @@
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-    <!--
-       <androidx.viewpager2.widget.ViewPager2
-       android:id="@+id/viewpager"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:orientation="vertical"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toTopOf="parent" />-->
 
 
 

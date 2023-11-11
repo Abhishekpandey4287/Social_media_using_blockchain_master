@@ -5,7 +5,7 @@ public class VideoModel {
     String userName;
     String media_url;
     String songName;
-
+//encapsulation
     public VideoModel(String description, String userName, String media_url, String songName) {
         this.description = description;
         this.userName = userName;

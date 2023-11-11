@@ -26,7 +26,7 @@ public class HomeActivity extends AppCompatActivity {
     private ArrayList<VideoModel> videos;
     private int currentVideoIndex = 0;
     private boolean isAutoScrolling = true;
-    private static final long AUTO_SCROLL_DELAY = 60000; // 5 seconds delay
+    private static final long AUTO_SCROLL_DELAY = 60000; // 60 seconds delay
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
