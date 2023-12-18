@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -16,6 +16,7 @@ import com.example.social_media_using_blockchain.Adapter.VideoAdapter;
 import com.example.social_media_using_blockchain.models.VideoModel;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
@@ -25,8 +26,7 @@ public class HomeActivity extends AppCompatActivity {
     private VideoAdapter videoAdapter;
     private ArrayList<VideoModel> videos;
     private int currentVideoIndex = 0;
-    private boolean isAutoScrolling = true;
-    private static final long AUTO_SCROLL_DELAY = 60000; // 60 seconds delay
+    private static final long AUTO_SCROLL_DELAY = 120000; // 60 seconds delay
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +40,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openGallery();
-            }
-        });
-
-        imageView9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleSearchLayout();
             }
         });
 
@@ -64,8 +57,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 if (position == videos.size() - 1) {
-                    // Reached the end of the list
-                    stopAutoScroll();
+                    // Reached the end of the list, reset to the beginning
+                    currentVideoIndex = 0;
+                    viewPager.setCurrentItem(currentVideoIndex, false);
                 }
             }
         });
@@ -75,7 +69,6 @@ public class HomeActivity extends AppCompatActivity {
         imageView7 = findViewById(R.id.imageView7);
         Glide.with(this).load(R.drawable.add).into(imageView7);
 
-        imageView9 = findViewById(R.id.imageView9);
         videos = new ArrayList<>();
 
         // Example VideoModel:
@@ -92,12 +85,6 @@ public class HomeActivity extends AppCompatActivity {
         // Add more VideoModel instances as needed
     }
 
-    private void toggleSearchLayout() {
-        LinearLayout searchLayout = findViewById(R.id.searchLayout);
-        int visibility = searchLayout.getVisibility();
-        searchLayout.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
-    }
-
     private void openGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, PICK_IMAGE);
@@ -105,22 +92,24 @@ public class HomeActivity extends AppCompatActivity {
 
     private void startAutoScroll() {
         final android.os.Handler handler = new android.os.Handler();
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (isAutoScrolling && currentVideoIndex < videos.size() - 1) {
+                if (currentVideoIndex <= videos.size() -1 ) {
                     // Scroll to the next video
                     currentVideoIndex++;
-                    viewPager.setCurrentItem(currentVideoIndex);
+                } else {
+                    // Reached the end of the list, reset to the beginning
+                    currentVideoIndex = 0;
                 }
+
+                viewPager.setCurrentItem(currentVideoIndex);
+
+                // Continue scrolling after a delay
                 handler.postDelayed(this, AUTO_SCROLL_DELAY);
             }
         }, AUTO_SCROLL_DELAY);
-    }
-
-    private void stopAutoScroll() {
-        isAutoScrolling = false;
-        Toast.makeText(this, "Reached the end of the list", Toast.LENGTH_SHORT).show();
     }
 
     @Override
