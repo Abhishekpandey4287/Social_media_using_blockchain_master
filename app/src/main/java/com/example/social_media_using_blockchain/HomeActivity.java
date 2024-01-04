@@ -6,23 +6,18 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
-
 import com.bumptech.glide.Glide;
 import com.example.social_media_using_blockchain.Adapter.VideoAdapter;
 import com.example.social_media_using_blockchain.models.VideoModel;
-
 import java.util.ArrayList;
-import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     private ImageView imageView7;
-    private ImageView imageView9;
     private ViewPager2 viewPager;
+    private static final float TARGET_VIDEO_RATIO = 9f / 16f;
     private VideoAdapter videoAdapter;
     private ArrayList<VideoModel> videos;
     private int currentVideoIndex = 0;
@@ -49,40 +44,50 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         viewPager = findViewById(R.id.viewPager2);
-        videoAdapter = new VideoAdapter(videos);
+        videoAdapter = new VideoAdapter(videos, viewPager); // Pass viewPager reference to the adapter
         viewPager.setAdapter(videoAdapter);
 
-        // Set a listener to detect the end of the list
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 if (position == videos.size() - 1) {
-                    // Reached the end of the list, reset to the beginning
                     currentVideoIndex = 0;
                     viewPager.setCurrentItem(currentVideoIndex, false);
                 }
             }
         });
     }
-
     private void initViews() {
         imageView7 = findViewById(R.id.imageView7);
         Glide.with(this).load(R.drawable.add).into(imageView7);
 
         videos = new ArrayList<>();
-
-        // Example VideoModel:
-        VideoModel video = new VideoModel("Hello, it's a nice day", "Abhishek",
-                "https://video.blender.org/download/videos/3d95fb3d-c866-42c8-9db1-fe82f48ccb95-804.mp4", "Let's enjoy the day!");
-        videos.add(video);
-        VideoModel video1 = new VideoModel("Greetings from Abhishek", "Abhishek",
-                "https://video.blender.org/download/videos/3d95fb3d-c866-42c8-9db1-fe82f48ccb95-804.mp4", "Have a great day!");
-        videos.add(video1);
-        VideoModel video2 = new VideoModel("Beautiful Scenery", "Abhishek",
+        viewPager = findViewById(R.id.viewPager2);
+        VideoModel onlineVideo = new VideoModel("Hello, it's a nice day", "Abhishek",
                 "https://video.blender.org/download/videos/3d95fb3d-c866-42c8-9db1-fe82f48ccb95-804.mp4", "Nature's beauty!");
-        videos.add(video2);
+        videos.add(onlineVideo);
 
-        // Add more VideoModel instances as needed
+        int rawResourceId2 = R.raw.b;
+        Uri rawVideoUri2 = Uri.parse("android.resource://" + getPackageName() + "/" + rawResourceId2);
+        VideoModel rawVideo2 = new VideoModel("Sunset View", "Abhishek",
+                rawVideoUri2.toString(), "Enjoying the sunset!");
+        videos.add(rawVideo2);
+
+        int rawResourceId3 = R.raw.c;
+        Uri rawVideoUri3 = Uri.parse("android.resource://" + getPackageName() + "/" + rawResourceId3);
+        VideoModel rawVideo3 = new VideoModel("Sunset View", "Abhishek",
+                rawVideoUri3.toString(), "Enjoying the sunset!");
+        videos.add(rawVideo3);
+
+        int rawResourceId4 = R.raw.video;
+        Uri rawVideoUri4 = Uri.parse("android.resource://" + getPackageName() + "/" + rawResourceId4);
+        VideoModel rawVideo4 = new VideoModel("Sunset View", "Abhishek",
+                rawVideoUri4.toString(), "Enjoying the sunset!");
+        videos.add(rawVideo4);
+
+        VideoModel anotherOnlineVideo = new VideoModel("Beautiful Scenery", "Abhishek",
+                "https://video.blender.org/download/videos/3d95fb3d-c866-42c8-9db1-fe82f48ccb95-804.mp4", "Nature's beauty!");
+        videos.add(anotherOnlineVideo);
     }
 
     private void openGallery() {
@@ -96,17 +101,13 @@ public class HomeActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (currentVideoIndex <= videos.size() -1 ) {
-                    // Scroll to the next video
+                if (currentVideoIndex < videos.size() - 1) {
                     currentVideoIndex++;
                 } else {
-                    // Reached the end of the list, reset to the beginning
                     currentVideoIndex = 0;
                 }
 
                 viewPager.setCurrentItem(currentVideoIndex);
-
-                // Continue scrolling after a delay
                 handler.postDelayed(this, AUTO_SCROLL_DELAY);
             }
         }, AUTO_SCROLL_DELAY);

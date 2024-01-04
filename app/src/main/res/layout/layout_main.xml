@@ -8,14 +8,15 @@
     android:keepScreenOn="true"
     android:orientation="vertical">
 
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"/>
 
     <VideoView
@@ -36,7 +37,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="54dp"
         android:elevation="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +58,7 @@
         android:id="@+id/comment"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toTopOf="@+id/share"
         app:layout_constraintEnd_toEndOf="@+id/share"
         app:layout_constraintStart_toStartOf="@+id/share"
@@ -67,21 +68,20 @@
         android:id="@+id/like"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="32dp"
-        app:tint="@color/colorWhite"
+        android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toTopOf="@+id/comment"
         app:layout_constraintEnd_toEndOf="@+id/comment"
         app:layout_constraintStart_toStartOf="@+id/comment"
-        app:srcCompat="@drawable/like" />
+        app:srcCompat="@drawable/like"
+        app:tint="@color/colorWhite" />
 
     <ImageView
         android:id="@+id/token"
         android:layout_width="84dp"
         android:layout_height="84dp"
-        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/like"
         app:layout_constraintEnd_toEndOf="@+id/like"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.39"
         app:layout_constraintStart_toStartOf="@+id/like"
         app:srcCompat="@drawable/ic_launcher_foreground"
         tools:visibility="visible" />
