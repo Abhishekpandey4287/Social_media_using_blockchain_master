@@ -65,15 +65,29 @@ public class HomeActivity extends AppCompatActivity {
 
         videos = new ArrayList<>();
         viewPager = findViewById(R.id.viewPager2);
-        VideoModel onlineVideo = new VideoModel("Hello, it's a nice day", "Abhishek",
-                "https://video.blender.org/download/videos/3d95fb3d-c866-42c8-9db1-fe82f48ccb95-804.mp4", "Nature's beauty!");
-        videos.add(onlineVideo);
+        int rawResourceId0 = R.raw.a;
+        Uri rawVideoUri0 = Uri.parse("android.resource://" + getPackageName() + "/" + rawResourceId0);
+        VideoModel rawVideo0 = new VideoModel("Sunset View", "Abhishek",
+                rawVideoUri0.toString(), "Enjoying the sunset!");
+        videos.add(rawVideo0);
+
+        int rawResourceId = R.raw.d;
+        Uri rawVideoUri = Uri.parse("android.resource://" + getPackageName() + "/" + rawResourceId);
+        VideoModel rawVideo = new VideoModel("Sunset View", "Abhishek",
+                rawVideoUri.toString(), "Enjoying the sunset!");
+        videos.add(rawVideo);
 
         int rawResourceId2 = R.raw.b;
         Uri rawVideoUri2 = Uri.parse("android.resource://" + getPackageName() + "/" + rawResourceId2);
         VideoModel rawVideo2 = new VideoModel("Sunset View", "Abhishek",
                 rawVideoUri2.toString(), "Enjoying the sunset!");
         videos.add(rawVideo2);
+
+        int rawResourceId5 = R.raw.e;
+        Uri rawVideoUri5 = Uri.parse("android.resource://" + getPackageName() + "/" + rawResourceId5);
+        VideoModel rawVideo5 = new VideoModel("Sunset View", "Abhishek",
+                rawVideoUri5.toString(), "Enjoying the sunset!");
+        videos.add(rawVideo5);
 
         int rawResourceId3 = R.raw.c;
         Uri rawVideoUri3 = Uri.parse("android.resource://" + getPackageName() + "/" + rawResourceId3);
@@ -86,6 +100,9 @@ public class HomeActivity extends AppCompatActivity {
         VideoModel rawVideo4 = new VideoModel("Sunset View", "Abhishek",
                 rawVideoUri4.toString(), "Enjoying the sunset!");
         videos.add(rawVideo4);
+        VideoModel onlineVideo = new VideoModel("Hello, it's a nice day", "Abhishek",
+                "https://video.blender.org/download/videos/3d95fb3d-c866-42c8-9db1-fe82f48ccb95-804.mp4", "Nature's beauty!");
+        videos.add(onlineVideo);
 
         VideoModel anotherOnlineVideo = new VideoModel("Beautiful Scenery", "Abhishek",
                 "https://video.blender.org/download/videos/3d95fb3d-c866-42c8-9db1-fe82f48ccb95-804.mp4", "Nature's beauty!");
