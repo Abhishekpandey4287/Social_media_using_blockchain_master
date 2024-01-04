@@ -88,8 +88,7 @@ public class HomeActivity extends AppCompatActivity {
         VideoModel anotherOnlineVideo = new VideoModel("Beautiful Scenery", "Abhishek",
                 "https://video.blender.org/download/videos/3d95fb3d-c866-42c8-9db1-fe82f48ccb95-804.mp4", "Nature's beauty!");
         videos.add(anotherOnlineVideo);
-        //hello its abhishek here
-        //how can i help you
+
     }
 
     private void openGallery() {
