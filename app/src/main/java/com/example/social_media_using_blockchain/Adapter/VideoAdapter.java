@@ -75,7 +75,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
                 @Override
                 public void onPrepared(MediaPlayer mediaPlayer) {
                     float videoRatio = mediaPlayer.getVideoWidth() / (float) mediaPlayer.getVideoHeight();
-                    float targetRatio = 1080f / 1920f; // 9:16 aspect ratio
+                    float targetRatio =9f /15f; // 9:15 aspect ratio
 
                     float scale;
                     if (videoRatio > targetRatio) {

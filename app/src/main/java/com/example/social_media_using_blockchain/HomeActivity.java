@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     private ImageView imageView7;
+    private ImageView imageView;
     private ViewPager2 viewPager;
     private static final float TARGET_VIDEO_RATIO = 9f / 16f;
     private VideoAdapter videoAdapter;
@@ -58,6 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
     private void initViews() {
+
         imageView7 = findViewById(R.id.imageView7);
         Glide.with(this).load(R.drawable.add).into(imageView7);
 
@@ -114,6 +116,8 @@ public class HomeActivity extends AppCompatActivity {
         }, AUTO_SCROLL_DELAY);
     }
 
+
+    //below code is for the image view
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
