@@ -3,20 +3,24 @@ package com.example.social_media_using_blockchain;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
+
 import com.bumptech.glide.Glide;
 import com.example.social_media_using_blockchain.Adapter.VideoAdapter;
 import com.example.social_media_using_blockchain.models.VideoModel;
+
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
-    private ImageView imageView7;
-    private ImageView imageView;
+    private ImageView addImageView;
+    private ImageView profileImageView;
     private ViewPager2 viewPager;
     private static final float TARGET_VIDEO_RATIO = 9f / 16f;
     private VideoAdapter videoAdapter;
@@ -32,12 +36,9 @@ public class HomeActivity extends AppCompatActivity {
         initViews();
         setupViewPager();
 
-        imageView7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGallery();
-            }
-        });
+        addImageView.setOnClickListener(v -> openGallery());
+
+        profileImageView.setOnClickListener(v -> openProfile());
 
         // Start auto-scrolling through videos
         startAutoScroll();
@@ -58,12 +59,16 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-    private void initViews() {
 
-        imageView7 = findViewById(R.id.imageView7);
-        Glide.with(this).load(R.drawable.add).into(imageView7);
+    private void initViews() {
+        addImageView = findViewById(R.id.imageView7);
+        Glide.with(this).load(R.drawable.add).into(addImageView);
+
+        profileImageView = findViewById(R.id.imageView11);
+        Glide.with(this).load(R.drawable.profile).into(profileImageView);
 
         videos = new ArrayList<>();
+
         viewPager = findViewById(R.id.viewPager2);
         int rawResourceId0 = R.raw.a;
         Uri rawVideoUri0 = Uri.parse("android.resource://" + getPackageName() + "/" + rawResourceId0);
@@ -107,7 +112,6 @@ public class HomeActivity extends AppCompatActivity {
         VideoModel anotherOnlineVideo = new VideoModel("Beautiful Scenery", "Abhishek",
                 "https://video.blender.org/download/videos/3d95fb3d-c866-42c8-9db1-fe82f48ccb95-804.mp4", "Nature's beauty!");
         videos.add(anotherOnlineVideo);
-
     }
 
     private void openGallery() {
@@ -115,32 +119,32 @@ public class HomeActivity extends AppCompatActivity {
         startActivityForResult(galleryIntent, PICK_IMAGE);
     }
 
+    private void openProfile() {
+        Intent profileIntent = new Intent(HomeActivity.this, ProfileActivity.class);
+        startActivity(profileIntent);
+    }
+
     private void startAutoScroll() {
-        final android.os.Handler handler = new android.os.Handler();
+        Handler handler = new Handler();
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (currentVideoIndex < videos.size() - 1) {
-                    currentVideoIndex++;
-                } else {
-                    currentVideoIndex = 0;
-                }
-
-                viewPager.setCurrentItem(currentVideoIndex);
-                handler.postDelayed(this, AUTO_SCROLL_DELAY);
+        handler.postDelayed(() -> {
+            if (currentVideoIndex < videos.size() - 1) {
+                currentVideoIndex++;
+            } else {
+                currentVideoIndex = 0;
             }
+
+            viewPager.setCurrentItem(currentVideoIndex);
+            handler.postDelayed(this::startAutoScroll, AUTO_SCROLL_DELAY);
         }, AUTO_SCROLL_DELAY);
     }
 
-
-    //below code is for the image view
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri selectedImageUri = data.getData();
-            Glide.with(this).load(selectedImageUri).into(imageView7);
+            Glide.with(this).load(selectedImageUri).into(addImageView);
         }
     }
 }
