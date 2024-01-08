@@ -22,7 +22,6 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView addImageView;
     private ImageView profileImageView;
     private ViewPager2 viewPager;
-    private static final float TARGET_VIDEO_RATIO = 9f / 16f;
     private VideoAdapter videoAdapter;
     private ArrayList<VideoModel> videos;
     private int currentVideoIndex = 0;
@@ -33,11 +32,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
         initViews();
         setupViewPager();
 
         addImageView.setOnClickListener(v -> openGallery());
-
         profileImageView.setOnClickListener(v -> openProfile());
 
         // Start auto-scrolling through videos
@@ -46,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         viewPager = findViewById(R.id.viewPager2);
-        videoAdapter = new VideoAdapter(videos, viewPager); // Pass viewPager reference to the adapter
+        videoAdapter = new VideoAdapter(videos, viewPager);
         viewPager.setAdapter(videoAdapter);
 
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -68,7 +67,6 @@ public class HomeActivity extends AppCompatActivity {
         Glide.with(this).load(R.drawable.profile).into(profileImageView);
 
         videos = new ArrayList<>();
-
         viewPager = findViewById(R.id.viewPager2);
         int rawResourceId0 = R.raw.a;
         Uri rawVideoUri0 = Uri.parse("android.resource://" + getPackageName() + "/" + rawResourceId0);

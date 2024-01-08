@@ -15,22 +15,21 @@ public class ViewPagerProfileUIAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        if(position==0){
+        if (position == 0) {
             return new ReelsFragment();
-        } else  {
+        } else {
             return new FavoriteFragment();
         }
     }
 
     @Override
     public int getCount() {
-        return 2;//no of tabs
+        return 2;
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-            return null;
+        return null;
     }
-
 }
