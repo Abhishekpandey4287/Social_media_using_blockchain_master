@@ -17,6 +17,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     private ImageView imageView7;
     private ImageView imageView;
+    private ImageView imageView11;
     private ViewPager2 viewPager;
     private static final float TARGET_VIDEO_RATIO = 9f / 16f;
     private VideoAdapter videoAdapter;
@@ -28,9 +29,11 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        
 
         initViews();
         setupViewPager();
+        imageView11 = findViewById(R.id.imageView11);
 
         imageView7.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +117,14 @@ public class HomeActivity extends AppCompatActivity {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, PICK_IMAGE);
     }
+      imageView11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(HomeActivity.this, ProfileMainActivity.class);
+                startActivity(intent); //link the profile with home button
+            }
+        });
 
     private void startAutoScroll() {
         final android.os.Handler handler = new android.os.Handler();
@@ -142,5 +153,9 @@ public class HomeActivity extends AppCompatActivity {
             Uri selectedImageUri = data.getData();
             Glide.with(this).load(selectedImageUri).into(imageView7);
         }
+    }
+    private void openProfilePage() {
+        Intent intent = new Intent(this, ProfileMainActivity.class);
+        startActivity(intent);
     }
 }
