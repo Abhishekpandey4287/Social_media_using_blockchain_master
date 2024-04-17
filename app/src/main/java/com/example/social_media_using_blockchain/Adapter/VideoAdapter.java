@@ -50,7 +50,6 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
         ViewPager2 viewPager;
 
         public MyViewHolder(@NonNull View itemView, ViewPager2 viewPager) {
-            //
             super(itemView);
             this.viewPager = viewPager;
             videoView = itemView.findViewById(R.id.videoView);

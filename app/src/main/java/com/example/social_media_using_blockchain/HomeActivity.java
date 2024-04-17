@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -16,31 +15,26 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     private ImageView imageView7;
-    private ImageView imageView;
-    private ImageView imageView11;
     private ViewPager2 viewPager;
+    private ImageView musicGifImageView;
+
     private static final float TARGET_VIDEO_RATIO = 9f / 16f;
     private VideoAdapter videoAdapter;
     private ArrayList<VideoModel> videos;
     private int currentVideoIndex = 0;
     private static final long AUTO_SCROLL_DELAY = 120000; // 60 seconds delay
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        
 
         initViews();
         setupViewPager();
-        imageView11 = findViewById(R.id.imageView11);
 
-        imageView7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGallery();
-            }
-        });
+        imageView7.setOnClickListener(v -> openGallery());
+
 
         // Start auto-scrolling through videos
         startAutoScroll();
@@ -62,10 +56,9 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
     private void initViews() {
-
         imageView7 = findViewById(R.id.imageView7);
         Glide.with(this).load(R.drawable.add).into(imageView7);
-
+        musicGifImageView = findViewById(R.id.music_Gif);
         videos = new ArrayList<>();
         viewPager = findViewById(R.id.viewPager2);
         int rawResourceId0 = R.raw.a;
@@ -117,27 +110,16 @@ public class HomeActivity extends AppCompatActivity {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, PICK_IMAGE);
     }
-      imageView11.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Intent intent = new Intent(HomeActivity.this, ProfileMainActivity.class);
-                startActivity(intent); //link the profile with home button
-            }
-        });
 
     private void startAutoScroll() {
         final android.os.Handler handler = new android.os.Handler();
 
         handler.postDelayed(new Runnable() {
             @Override
-            public void run() {
-                if (currentVideoIndex < videos.size() - 1) {
-                    currentVideoIndex++;
-                } else {
-                    currentVideoIndex = 0;
-                }
 
+            public void run() {
+                currentVideoIndex = (currentVideoIndex + 1) % videos.size();
                 viewPager.setCurrentItem(currentVideoIndex);
                 handler.postDelayed(this, AUTO_SCROLL_DELAY);
             }
@@ -153,9 +135,5 @@ public class HomeActivity extends AppCompatActivity {
             Uri selectedImageUri = data.getData();
             Glide.with(this).load(selectedImageUri).into(imageView7);
         }
-    }
-    private void openProfilePage() {
-        Intent intent = new Intent(this, ProfileMainActivity.class);
-        startActivity(intent);
     }
 }
